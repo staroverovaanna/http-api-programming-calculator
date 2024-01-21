@@ -1,5 +1,3 @@
-
-
 def tokenize(expression):
     # Токенизировать выражение
     tokens = []
@@ -44,7 +42,6 @@ def calc_two_numbers(operand_1, operand_2, operation):
 
 
 def calcalate(tokens):
-    # print(tokens)
     operand_stack = []
     operation_stack = []
     priority = {'+': 1, '-': 1, '*': 2, '/': 2}
@@ -63,7 +60,8 @@ def calcalate(tokens):
             # если стак непустой и последняя операция с таким же приоритетом
             # то выполняем предыдущую операцию в стаке операций для 2 последних операндов в стаке операндов
             else:
-                while operation_stack and (operation_stack[-1] != '(' or (priority[operation_stack[-1]] >= priority[token])):
+                while operation_stack and (
+                        operation_stack[-1] != '(' or (priority[operation_stack[-1]] >= priority[token])):
                     operand_2 = operand_stack.pop()
                     operand_1 = operand_stack.pop()
                     operation = operation_stack.pop()
@@ -93,8 +91,3 @@ def calcalate(tokens):
         operand_stack.append(res_tmp)
 
     return operand_stack[0]
-
-# expression = "-2 * (3 + 4) - 5 / 2"
-# tokens = tokenize(expression)
-#
-# print(calcalate(tokens))

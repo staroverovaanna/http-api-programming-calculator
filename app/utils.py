@@ -12,9 +12,7 @@ class Token:
         try:
             self.value / another_token.value
         except ZeroDivisionError as e:
-            # было - Exception
             raise ZeroDivisionError(f'Division by zero: {self.value} / {another_token.value}') from e
-
         return self.value / another_token.value
 
     def multiply(self, another_token):
@@ -29,7 +27,6 @@ class Token:
             return self.add(another_token)
         if operation.value == '-':
             return self.subtract(another_token)
-
         else:
             raise Exception(f'Unknown operation {operation.value}')
 
@@ -80,7 +77,6 @@ class Expression:
         priority = {'+': 1, '-': 1, '*': 2, '/': 2}
         try:
             for i, token in enumerate(tokens):
-                # print(token.value)
                 if str(token.value) in '+-/*':
                     # если в стаке операций лежит операция с меньшим приоритетом или открыв скобка, кладем в стак наш токен
                     if operation_stack and (operation_stack[-1].value == '(' or priority[operation_stack[-1].value] < priority[token.value]):
@@ -117,16 +113,13 @@ class Expression:
                 else:
                     operand_stack.append(token)
 
-            # print(operand_stack[-2].value, operation_stack[-1].value, operand_stack[-1].value)
             while operation_stack:
-                # print(operand_stack[-2].value, operation_stack[-1].value, operand_stack[-1].value)
                 operand_2 = operand_stack.pop()
                 operand_1 = operand_stack.pop()
                 operation = operation_stack.pop()
                 res_tmp = Token(operand_1.calculate(operand_2, operation))
                 operand_stack.append(res_tmp)
 
-            # print(operand_stack[0].value)
             return operand_stack[0].value
 
         except ZeroDivisionError as e:
